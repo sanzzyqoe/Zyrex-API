@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Modern API documentation and interactive testing interface. Explore our powerful APIs with ease.">
+    <meta name="keywords" content="API, API Documentation, REST API, Zyrex API, Zyrex, Developer Tools">
+    <meta name="author" content="Zyrex Team">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zyrex-api.vercel.app/">
+    <meta property="og:title" content="Zyrex Api'S - Modern API Documentation">
+    <meta property="og:description" content="Explore our various API endpoints with a modern and easy-to-use interface. Free APIs for developers including AI, random images, and more.">
+    <meta property="og:image" content="https://zyrex-api.vercel.app/api/preview-image">
+    
+    <link rel="icon" href="/src/icon.png" type="image/png">
+    <title id="page">Zyrex Api'S</title>
+    
+    <!-- Modern CSS Framework -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="/assets/styles-new.css">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="fixed inset-0 bg-white dark:bg-gray-900 z-50 flex items-center justify-center">
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p class="text-gray-600 dark:text-gray-300 text-lg">Loading Zyrex API...</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-lg border-b border-gray-200 dark:border-gray-700 fixed w-full top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="h-8 w-8" src="/src/icon.png" alt="Zyrex API">
+                        <span class="ml-2 text-xl font-bold text-gray-900 dark:text-white">Zyrex API</span>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="#home" class="nav-link active">Home</a>
+                        <a href="#apis" class="nav-link">APIs</a>
+                        <a href="#docs" class="nav-link">Documentation</a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Search -->
+                    <div class="relative hidden md:block">
+                        <input type="text" id="searchInput" 
+                               class="w-64 pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="Search APIs...">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- API Key Input -->
+                    <div class="relative">
+                        <input type="password" id="apiKeyInput" 
+                               class="w-48 pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="Enter API Key">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-key text-gray-400"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Theme Toggle -->
+                    <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+                    
+                    <!-- Mobile menu button -->
+                    <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="mobile-nav-link">Home</a>
+                <a href="#apis" class="mobile-nav-link">APIs</a>
+                <a href="#docs" class="mobile-nav-link">Documentation</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section id="home" class="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-20">
+            <div class="absolute inset-0 bg-black opacity-20"></div>
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h1 id="apiName" class="text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-200">
+                        Zyrex API
+                    </h1>
+                    <p id="apiDescription" class="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
+                        Simple and powerful APIs for everyone. Build amazing applications with our comprehensive suite of tools.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button class="btn-primary">
+                            <i class="fas fa-rocket mr-2"></i>
+                            Get Started
+                        </button>
+                        <button class="btn-secondary">
+                            <i class="fas fa-book mr-2"></i>
+                            View Documentation
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Animated background elements -->
+            <div class="absolute inset-0 overflow-hidden">
+                <div class="floating-shape shape-1"></div>
+                <div class="floating-shape shape-2"></div>
+                <div class="floating-shape shape-3"></div>
+            </div>
+        </section>
+
+        <!-- API Status -->
+        <section class="py-12 bg-white dark:bg-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-green-100 text-green-600">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div>
+                            <h3 class="stat-title">API Status</h3>
+                            <p id="apiStatus" class="stat-value text-green-600">Active</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-blue-100 text-blue-600">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div>
+                            <h3 class="stat-title">Version</h3>
+                            <p id="apiVersion" class="stat-value">v1.0.0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-purple-100 text-purple-600">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>
+                            <h3 class="stat-title">Endpoints</h3>
+                            <p id="endpointCount" class="stat-value">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- APIs Section -->
+        <section id="apis" class="py-16 bg-gray-50 dark:bg-gray-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                        Available APIs
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                        Explore our collection of powerful and easy-to-use APIs designed to accelerate your development.
+                    </p>
+                </div>
+                
+                <div id="apiCategories" class="space-y-8">
+                    <!-- API categories will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Documentation Section -->
+        <section id="docs" class="py-16 bg-white dark:bg-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                        Getting Started
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                        Learn how to integrate our APIs into your applications with these simple steps.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="doc-card">
+                        <div class="doc-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h3 class="doc-title">1. Get API Key</h3>
+                        <p class="doc-description">
+                            Obtain your API key to authenticate your requests. Enter it in the header field above.
+                        </p>
+                    </div>
+                    
+                    <div class="doc-card">
+                        <div class="doc-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="doc-title">2. Make Requests</h3>
+                        <p class="doc-description">
+                            Use your preferred HTTP client to make requests to our endpoints with your API key.
+                        </p>
+                    </div>
+                    
+                    <div class="doc-card">
+                        <div class="doc-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="doc-title">3. Build Amazing Apps</h3>
+                        <p class="doc-description">
+                            Integrate our APIs into your applications and create something amazing!
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Code Example -->
+                <div class="mt-12">
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Example Request</h3>
+                    <div class="bg-gray-900 rounded-lg p-6 overflow-x-auto">
+                        <pre class="text-green-400 text-sm"><code>curl -X GET "https://api.zyrex.com/ai/luminai?text=Hello" \
+  -H "X-API-Key: your-api-key-here" \
+  -H "Content-Type: application/json"</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <img class="h-8 w-8" src="/src/icon.png" alt="Zyrex API">
+                        <span class="ml-2 text-xl font-bold">Zyrex API</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Building the future of API development with simple, powerful, and reliable tools.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#apis" class="text-gray-400 hover:text-white transition-colors">APIs</a></li>
+                        <li><a href="#docs" class="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Connect</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-discord text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2025 Zyrex API. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- API Modal -->
+    <div id="apiModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 id="modalTitle" class="text-2xl font-bold text-gray-900 dark:text-white"></h3>
+                        <p id="modalDescription" class="text-gray-600 dark:text-gray-300 mt-1"></p>
+                    </div>
+                    <button id="closeModal" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="p-6">
+                <!-- Endpoint -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Endpoint</label>
+                    <div class="flex">
+                        <input id="modalEndpoint" type="text" readonly 
+                               class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-l-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white">
+                        <button id="copyEndpoint" class="px-4 py-2 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Parameters -->
+                <div id="parametersSection" class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Parameters</label>
+                    <div id="parameterInputs" class="space-y-3">
+                        <!-- Parameter inputs will be added here -->
+                    </div>
+                </div>
+                
+                <!-- Test Button -->
+                <div class="mb-6">
+                    <button id="testApiBtn" class="btn-primary w-full">
+                        <i class="fas fa-play mr-2"></i>
+                        Test API
+                    </button>
+                </div>
+                
+                <!-- Response -->
+                <div id="responseSection" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Response</label>
+                    <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+                        <pre id="responseContent" class="text-green-400 text-sm"></pre>
+                    </div>
+                </div>
+                
+                <!-- Loading -->
+                <div id="loadingResponse" class="hidden text-center py-8">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                    <p class="text-gray-600 dark:text-gray-300">Testing API...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-4 transform translate-x-full transition-transform duration-300 z-50">
+        <div class="flex items-center">
+            <div id="toastIcon" class="mr-3">
+                <i class="fas fa-info-circle text-blue-600"></i>
+            </div>
+            <div>
+                <p id="toastMessage" class="text-gray-900 dark:text-white font-medium"></p>
+            </div>
+            <button id="closeToast" class="ml-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="/assets/script-new.js"></script>
+</body>
+</html>
+
